@@ -1,0 +1,28 @@
+.word-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    border: 3.5px solid black;
+    border-radius: 10px;
+    border-style: double;
+    margin: 15px;
+}
+
+.word-eng {
+    font-family: Courier;
+    font-size: 35px;
+}
+
+.word-transcription {
+    font-size: 25px;
+}
+
+.word-rus {
+    display: none;
+}
+
+.word-topic {
+    font-size: small;
+}
