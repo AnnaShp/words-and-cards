@@ -4,10 +4,11 @@
     justify-content: center;
     width: 300px;
     height: 300px;
-    border: 3.5px solid black;
+    border: 5px solid black;
     border-radius: 10px;
     border-style: double;
     margin: 15px;
+    background-color: rgb(247, 244, 229);
 }
 
 .word-eng {

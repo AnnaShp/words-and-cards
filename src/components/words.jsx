@@ -1,4 +1,4 @@
-import './words.css'
+import './Words.css'
 
 function CardWords(props) {
     return (

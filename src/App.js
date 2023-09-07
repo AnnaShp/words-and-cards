@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import CardWords from './components/words';
+import CardWords from './components/Words';
 
 const Words = [{
   eng: 'you', transcription: '[ju]', rus: 'Вы, ты', topic: 'pronouns'
@@ -13,7 +13,12 @@ const Words = [{
 function App() {
   return (
     <div className="App">
-      {Words.map((word) => <CardWords eng={word.eng} transcription={word.transcription} rus={word.rus} topic={word.topic} />)}
+      {Words.map((word) =>
+        <CardWords
+          eng={word.eng}
+          transcription={word.transcription}
+          rus={word.rus}
+          topic={word.topic} />)}
     </div>
   );
 }
