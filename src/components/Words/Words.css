@@ -1,9 +1,15 @@
+.container_words {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px;
+}
+
 .word-card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 300px;
-    height: 300px;
+    height: 330px;
     border: 5px solid black;
     border-radius: 10px;
     border-style: double;
@@ -21,7 +27,8 @@
 }
 
 .word-rus {
-    display: none;
+    color: crimson;
+    font-size: 30px;
 }
 
 .word-topic {
