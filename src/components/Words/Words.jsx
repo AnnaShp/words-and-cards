@@ -1,6 +1,6 @@
-import './Words.css'
+import './Words.css';
 
-function CardWords(props) {
+export default function CardWords(props) {
     const { id, emptyId, setTranslate, showTranslate } = props;
     return (
         <div className='word-card' onClick={() => showTranslate(id)}>
@@ -11,5 +11,3 @@ function CardWords(props) {
         </div>
     );
 }
-
-export default CardWords;
