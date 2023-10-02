@@ -1,0 +1,37 @@
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+}
+
+.card_container {
+  margin: 30px;
+  width: 300px;
+  height: 320px;
+  overflow: hidden;
+}
+
+.card_visible {
+  height: 100%;
+  min-width: 100%;
+  display: flex;
+  transition: translate;
+  transition-property: transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.btn_next,
+.btn_prev {
+  width: 70px;
+  height: 30px;
+  background-color: rgb(75, 120, 96);
+  border-radius: 10px;
+  font-family: Courier;
+  font-weight: 600;
+}
+
+.btn_next {
+  margin-left: 10px;
+}
