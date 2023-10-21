@@ -1,5 +1,5 @@
-import "./ReactTable.css";
-import React, { useMemo } from "react";
+import s from "./ReactTable.module.css";
+import { useMemo } from "react";
 import { useTable } from "react-table";
 import Data from "../Data/Data.json";
 import { Columns } from "./Columns";
@@ -12,6 +12,7 @@ function BasicTable() {
   const addId = () => {
     setId(id + 1);
   };
+
   const [eng, setEng] = useState("");
   const addEng = (e) => {
     setEng(e.target.value);
@@ -33,17 +34,16 @@ function BasicTable() {
     // console.log(e.target.value);
   };
 
+  // переменные
   const inputId = <p value={id}>{id}</p>;
-  const inputEng = <input type="text" value={eng} onChange={addEng}></input>;
+  // const inputEng = <input type="text" value={eng} onChange={addEng} />;
   const inputTransc = (
     <input type="text" value={transcription} onChange={addTranscription} />
   );
-  const inputRus = <input type="text" value={rus} onChange={addRus}></input>;
-  const inputTopic = (
-    <input type="text" value={topic} onChange={addTopic}></input>
-  );
+  const inputRus = <input type="text" value={rus} onChange={addRus} />;
+  const inputTopic = <input type="text" value={topic} onChange={addTopic} />;
 
-  const [mess, setMess] = useState("");
+  // const [mess, setMess] = useState("");
   const clearInput = () => {
     setEng("");
     setTranscription("");
@@ -51,14 +51,29 @@ function BasicTable() {
     setTopic("");
   };
 
+  let words = [];
+
   const sendData = () => {
-    let data = { id, eng, transcription, rus, topic };
+    let newWord = { id, eng, transcription, rus, topic };
     addId();
 
-    Data.push(data);
-    console.log(data);
-    console.log(Data);
+    let engWordInput = document.getElementById("eng_word");
+    console.log(engWordInput.value);
+    if (engWordInput.value !== "") {
+      let wordsStr = JSON.stringify(newWord);
+      // функция записывает массив данных в LocalStorage
+      window.localStorage.setItem("words", wordsStr);
+      console.log(wordsStr);
+    }
+    Data.push(newWord);
+    // console.log(data);
+    // console.log(Data);
     clearInput();
+  };
+
+  const showFromLocal = () => {
+    let wordsArr = JSON.parse(window.localStorage.getItem("words"));
+    // console.log(wordsArr);
   };
 
   const columns = useMemo(() => Columns, []);
@@ -91,17 +106,25 @@ function BasicTable() {
         {/* строка с инпутами */}
         <tr className="tr_input">
           <td className="input_id">{inputId}</td>
-          <td className="input_eng">{inputEng}</td>
+          <td className="input_eng">
+            <input type="text" value={eng} onChange={addEng} id="eng_word" />
+          </td>
           <td className="input_transcription">{inputTransc}</td>
           <td className="input_rus">{inputRus}</td>
           <td className="input_topic">{inputTopic}</td>
           <td className="td_save">
-            <button className="save" onClick={sendData}>
+            <button
+              className={s.save}
+              onClick={() => {
+                sendData();
+                showFromLocal();
+              }}
+            >
               Сохранить
             </button>
           </td>
-          <td className="td_cancel">
-            <button className="cancel">Отмена</button>
+          <td className={s.td_cancel}>
+            <button className={s.cancel}>Отмена</button>
           </td>
           {/* строки с данными из массива */}
         </tr>
@@ -112,10 +135,10 @@ function BasicTable() {
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
-              <td className="td_change">
+              <td className={s.td_change}>
                 <ButtonChange />
               </td>
-              <td className="td_delete">
+              <td className={s.td_delete}>
                 <ButtonDelete />
               </td>
             </tr>
