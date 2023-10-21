@@ -1,8 +1,4 @@
 .App {
   text-align: center;
-  height: 1500px;
-}
-
-body {
-  background-color: #282c34;
+  height: fit-content;
 }
