@@ -1,23 +1,51 @@
- [
-    {
-      "id": "1",
-      "eng": "you",
-      "transcription": "[ju]",
-      "rus": "Вы, ты",
-      "topic": "pronouns"
-    },
-    {
-      "id": "2",
-      "eng": "she",
-      "transcription": "[ʃi]",
-      "rus": "она",
-      "topic": "pronouns"
-    },
-    {
-      "id": "3",
-      "eng": "he",
-      "transcription": "[hiː]",
-      "rus": "он",
-      "topic": "pronouns"
-    }
-  ]
+[
+  {
+    "id": "1",
+    "eng": "I",
+    "transcription": "[aɪ]",
+    "rus": "я",
+    "topic": "pronouns"
+  },
+  {
+    "id": "2",
+    "eng": "you",
+    "transcription": "[ju]",
+    "rus": "Вы, ты",
+    "topic": "pronouns"
+  },
+  {
+    "id": "3",
+    "eng": "she",
+    "transcription": "[ʃi]",
+    "rus": "она",
+    "topic": "pronouns"
+  },
+  {
+    "id": "4",
+    "eng": "he",
+    "transcription": "[hiː]",
+    "rus": "он",
+    "topic": "pronouns"
+  },
+  {
+    "id": "5",
+    "eng": "his",
+    "transcription": "[hɪz]",
+    "rus": "его",
+    "topic": "pronouns"
+  },
+  {
+    "id": "6",
+    "eng": "their",
+    "transcription": "[ðeə r]",
+    "rus": "их",
+    "topic": "pronouns"
+  },
+  {
+    "id": "7",
+    "eng": "us",
+    "transcription": "[ʌs]",
+    "rus": "нас",
+    "topic": "pronouns"
+  }
+]
