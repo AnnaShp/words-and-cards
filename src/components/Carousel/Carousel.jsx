@@ -16,6 +16,9 @@ export const Carousel = (props) => {
   const handlePrevBtn = () => {
     setOffset((currentOffset) => {
       const newOffset = currentOffset + page_widht;
+      console.log(newOffset);
+      console.log(offset);
+      console.log(currentOffset);
       return Math.min(newOffset, 0);
     });
   };
@@ -59,7 +62,14 @@ export const Carousel = (props) => {
           Дальше
         </button>
       </div>
-      <div className={s.error}>
+      <div className={s.errFirst}>
+        {
+          <span style={{ display: offset >= 0 ? "flex" : "none" }}>
+            Это самая первая карточка 🙂
+          </span>
+        }
+      </div>
+      <div className={s.errLast}>
         {
           <span style={{ display: offset === maxOffset ? "flex" : "none" }}>
             Карточки закончились, но можно начать сначала!

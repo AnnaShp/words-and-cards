@@ -48,7 +48,8 @@
   margin-left: 10px;
 }
 
-.error {
+.errLast,
+.errFirst {
   color: white;
   font-size: 18px;
   display: flex;
