@@ -1,0 +1,36 @@
+.container_words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px;
+}
+
+.word_card {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  max-width: 100%;
+  height: 320px;
+  border-radius: 10px;
+  background: linear-gradient(to left, #bdbebd 0%, #f7f5e5 50%, #cececd 100%);
+  z-index: 1;
+}
+
+.word_eng {
+  font-family: Courier;
+  font-size: 36px;
+}
+
+.word_transcription {
+  font-size: 25px;
+}
+
+.word_rus {
+  color: crimson;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.word_topic {
+  font-size: small;
+}
