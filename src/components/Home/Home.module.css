@@ -1,0 +1,11 @@
+.main_part {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  justify-content: center;
+}
+
+h1 {
+  color: white;
+  font-weight: 400;
+}
