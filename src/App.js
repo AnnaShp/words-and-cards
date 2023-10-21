@@ -1,7 +1,7 @@
 import "./App.css";
 import HeaderNav from "./components/Header/Header";
 import Home from "./components/Home/Home";
-import { Carousel } from "./components/Carousel/Carousel";
+import Carousel from "./components/Carousel/Carousel";
 import BasicTable from "./components/ReactTable/ReactTable";
 import EmptyPage from "./components/EmptyPage/Empty";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

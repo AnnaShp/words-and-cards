@@ -3,7 +3,7 @@ import Data from "../Data/Data.json";
 import CardWords from "./Words/Words";
 import { useState } from "react";
 
-export const Carousel = (props) => {
+export default function Carousel(props) {
   // функция показа перевода слова
   const [emptyId, setTranslate] = useState(true);
   const showTranslate = (id) => {
@@ -78,4 +78,4 @@ export const Carousel = (props) => {
       </div>
     </div>
   );
-};
+}
