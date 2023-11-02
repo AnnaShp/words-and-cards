@@ -1,4 +1,4 @@
-import s from "./Words.module.css";
+import s from "./CardWords.module.css";
 
 export default function CardWords(props) {
   const {
@@ -19,8 +19,12 @@ export default function CardWords(props) {
     >
       <h2 className={s.word_eng}>{eng}</h2>
       <div className={s.word_transcription}>{transcription}</div>
-      {emptyId === id ? <h3 className={s.word_rus}>{rus}</h3> : ""}
       <div className={s.word_topic}>Topic: {topic}</div>
+      {emptyId === id ? (
+        <h3 className={s.word_rus}>{rus}</h3>
+      ) : (
+        <span className={s.word_desc}>Нажми чтобы увидеть перевод</span>
+      )}
     </div>
   );
 }

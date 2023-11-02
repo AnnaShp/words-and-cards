@@ -34,3 +34,9 @@
 .word_topic {
   font-size: small;
 }
+
+.word_desc {
+  margin-top: 20%;
+  opacity: 0.4;
+  font-size: 12px;
+}
