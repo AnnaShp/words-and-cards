@@ -55,3 +55,8 @@
   display: flex;
   justify-content: center;
 }
+
+.learned {
+  margin-top: 5%;
+  color: white;
+}
