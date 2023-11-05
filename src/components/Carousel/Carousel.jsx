@@ -1,7 +1,8 @@
 import s from "./Carousel.module.css";
 import Data from "../Data/Data.json";
 import CardWords from "./CardWords/CardWords";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useCountLearned from "./useCountLearned";
 
 export default function Carousel(props) {
   // функция показа перевода слова
@@ -9,6 +10,14 @@ export default function Carousel(props) {
   const showTranslate = (id) => {
     setTranslate(id);
   };
+
+  // счетчик изученных слов
+  const [count, setCount] = useCountLearned(0);
+  const showCountLearned = (id) => {
+    // console.log(count, id);
+    setCount((count) => count + 1);
+  };
+
   // переменные для карусели
   const [offset, setOffset] = useState(0);
   const page_widht = 300;
@@ -16,9 +25,6 @@ export default function Carousel(props) {
   const handlePrevBtn = () => {
     setOffset((currentOffset) => {
       const newOffset = currentOffset + page_widht;
-      console.log(newOffset);
-      console.log(offset);
-      console.log(currentOffset);
       return Math.min(newOffset, 0);
     });
   };
@@ -34,6 +40,9 @@ export default function Carousel(props) {
 
   return (
     <div className={s.wrapper}>
+      <div className={s.learned}>
+        <span>Изучено слов: {count} </span>
+      </div>
       <div className={s.carousel} id={s.cards}>
         <button className={s.btn_prev} onClick={handlePrevBtn}>
           Назад
@@ -54,6 +63,7 @@ export default function Carousel(props) {
                 emptyId={emptyId}
                 setTranslate={setTranslate}
                 showTranslate={showTranslate}
+                showCountLearned={showCountLearned}
               />
             ))}
           </div>
