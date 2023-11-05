@@ -1,7 +1,7 @@
 import s from "./Carousel.module.css";
 import Data from "../Data/Data.json";
 import CardWords from "./CardWords/CardWords";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useCountLearned from "./useCountLearned";
 
 export default function Carousel(props) {

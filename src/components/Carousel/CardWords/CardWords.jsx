@@ -1,4 +1,5 @@
 import s from "./CardWords.module.css";
+import { useState } from "react";
 
 export default function CardWords(props) {
   const {
@@ -12,6 +13,8 @@ export default function CardWords(props) {
     visible,
     showCountLearned,
   } = props;
+
+  const [focus, setFocus] = useState(true);
 
   return (
     <div
@@ -27,7 +30,15 @@ export default function CardWords(props) {
       {emptyId === id ? (
         <h3 className={s.word_rus}>{rus}</h3>
       ) : (
-        <span className={s.word_desc}>Проверить перевод</span>
+        <span
+          style={{
+            background: focus ? "rgb(194, 189, 189)" : "transparent",
+          }}
+          className={s.word_desc}
+          onFocus={() => setFocus(false)}
+        >
+          Проверить перевод
+        </span>
       )}
     </div>
   );
