@@ -1,0 +1,12 @@
+.save,
+.cancel {
+  background: linear-gradient(to bottom, #f36f6f 0%, #c15252 50%, #b42121 100%);
+}
+
+.save,
+.cancel {
+  width: 80px;
+  border-radius: 10px;
+  border-width: 1px;
+  height: 30px;
+}
