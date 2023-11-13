@@ -13,8 +13,7 @@ export default function Carousel(props) {
 
   // счетчик изученных слов
   const [count, setCount] = useCountLearned(0);
-  const showCountLearned = (id) => {
-    // console.log(count, id);
+  const showCountLearned = () => {
     setCount((count) => count + 1);
   };
 

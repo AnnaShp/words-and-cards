@@ -1,11 +1,11 @@
 import s from "./Home.module.css";
-import BasicTable from "../ReactTable/ReactTable";
+import MyTable from "../MyTable/MyTable";
 
 export default function Home() {
   return (
     <div className={s.wrapper}>
       <LearnWithUs />
-      <BasicTable />
+      <MyTable />
     </div>
   );
 }
