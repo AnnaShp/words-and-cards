@@ -1,0 +1,41 @@
+table th {
+  background: linear-gradient(to bottom, #2f302f 0%, #1d1e1e 50%, #484846 100%);
+  color: rgb(221, 217, 217);
+  font-size: 16px;
+}
+
+.td_change,
+.td_delete {
+  width: 100px;
+}
+
+.change,
+.delete,
+.save {
+  background: linear-gradient(to bottom, #f36f6f 0%, #c15252 50%, #b42121 100%);
+}
+
+.change,
+.delete {
+  width: 45px;
+  border-radius: 16px;
+  border-width: 1px;
+  height: 40px;
+}
+
+.save,
+.cancel {
+  width: 80px;
+  border-radius: 10px;
+  border-width: 1px;
+  height: 30px;
+}
+
+.full {
+  border: 2px solid rgb(13, 107, 13);
+  background-color: rgb(154, 203, 204);
+}
+
+.empty {
+  background-color: #ab3131;
+}
