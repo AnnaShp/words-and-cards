@@ -13,7 +13,6 @@ export default function CardWords(props) {
     visible,
     showCountLearned,
   } = props;
-
   const [focus, setFocus] = useState(true);
 
   return (

@@ -8,7 +8,7 @@
 .card_container {
   margin: 30px;
   width: 300px;
-  height: 320px;
+  height: 380px;
   overflow: hidden;
 }
 
@@ -59,4 +59,41 @@
 .learned {
   margin-top: 5%;
   color: white;
+}
+
+.loading,
+.err {
+  color: white;
+  font-size: 1.3em;
+  margin-top: 2em;
+}
+
+.err {
+  margin-top: 10em;
+}
+
+.wrapperLoader {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5em;
+  transition: 0.6s;
+  align-items: center;
+  margin-top: 12em;
+}
+
+.loader {
+  display: flex;
+  flex-direction: row;
+  width: 3em;
+  height: 3em;
+  border: 1em solid rgb(111, 137, 134);
+  border-radius: 50%;
+  border-left-color: rgb(73, 177, 130);
+  animation: loader 1.3s linear infinite;
+}
+
+@keyframes loader {
+  100% {
+    transform: rotate(360deg);
+  }
 }

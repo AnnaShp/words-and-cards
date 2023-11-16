@@ -1,10 +1,11 @@
 import s from "./Carousel.module.css";
-import Data from "../Data/Data.json";
 import CardWords from "./CardWords/CardWords";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import useCountLearned from "./useCountLearned";
+import { WordContext } from "../Context/Context";
 
-export default function Carousel(props) {
+export default function Carousel() {
+  const { words, isLoading, err } = useContext(WordContext);
   // функция показа перевода слова
   const [emptyId, setTranslate] = useState(true);
   const showTranslate = (id) => {
@@ -29,13 +30,26 @@ export default function Carousel(props) {
   };
 
   // листание вперед
-  const maxOffset = -(page_widht * (Data.length - 1));
+  const maxOffset = -(page_widht * (words.length - 1));
   const handleNextBtn = () => {
     setOffset((currentOffset) => {
       const newOffset = currentOffset - page_widht;
       return Math.max(newOffset, maxOffset);
     });
   };
+
+  if (err) {
+    return <p className={s.err}>{err.message}</p>;
+  }
+
+  if (isLoading) {
+    return (
+      <div className={s.wrapperLoader}>
+        <div className={s.loader} />
+        <p className={s.loading}>Загрузка ...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={s.wrapper}>
@@ -51,18 +65,19 @@ export default function Carousel(props) {
             className={s.card_visible}
             style={{ transform: `translateX(${offset}px)` }}
           >
-            {Data.map((word) => (
+            {words.map((word) => (
               <CardWords
                 key={word.id}
                 id={word.id}
-                eng={word.eng}
+                eng={word.english}
                 transcription={word.transcription}
-                rus={word.rus}
-                topic={word.topic}
+                rus={word.russian}
+                topic={word.tags}
                 emptyId={emptyId}
                 setTranslate={setTranslate}
                 showTranslate={showTranslate}
                 showCountLearned={showCountLearned}
+                useEffect={useEffect}
               />
             ))}
           </div>

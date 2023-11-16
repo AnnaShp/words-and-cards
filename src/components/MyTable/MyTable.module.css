@@ -31,15 +31,38 @@ table th {
   width: 100px;
 }
 
-/* .save,
-.cancel {
-  background: linear-gradient(to bottom, #f36f6f 0%, #c15252 50%, #b42121 100%);
+.loading,
+.err {
+  color: white;
+  font-size: 1.3em;
+  margin-top: 2em;
+}
+.err {
+  margin-top: 10em;
 }
 
-.save,
-.cancel {
-  width: 80px;
-  border-radius: 10px;
-  border-width: 1px;
-  height: 30px;
-} */
+.wrapperLoader {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5em;
+  transition: 0.6s;
+  align-items: center;
+  margin-top: 12em;
+}
+
+.loader {
+  display: flex;
+  flex-direction: row;
+  width: 3em;
+  height: 3em;
+  border: 1em solid rgb(111, 137, 134);
+  border-radius: 50%;
+  border-left-color: rgb(73, 177, 130);
+  animation: loader 1.3s linear infinite;
+}
+
+@keyframes loader {
+  100% {
+    transform: rotate(360deg);
+  }
+}

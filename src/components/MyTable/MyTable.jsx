@@ -1,16 +1,29 @@
 import s from "./MyTable.module.css";
-import { useMemo, useEffect, useState } from "react";
-import Data from "../Data/Data.json";
+import { useContext } from "react";
 import MyRow from "./MyRow/MyRow";
 import EmptyRow from "./EmptyRow/EmptyRow";
+import { WordContext } from "../Context/Context";
 
 export default function MyTable() {
-  const data = useMemo(() => Data, []);
-  // const [data, setData] = useState(Data);
-
   // useEffect(() => {
   //   data ? setData(data) : <MyRow />;
   // }, []);
+
+  const { words, isLoading, err } = useContext(WordContext);
+
+  if (err) {
+    return <p className={s.err}>{err.message}</p>;
+  }
+
+  if (isLoading) {
+    return (
+      <div className={s.wrapperLoader}>
+        <div className={s.loader} />
+        <p className={s.loading}>Загрузка ...</p>
+        <p className={s.loading}>{err}</p>
+      </div>
+    );
+  }
 
   return (
     <table id="table">
@@ -27,15 +40,15 @@ export default function MyTable() {
       </thead>
       <tbody>
         <EmptyRow />
-        {data.map((row) => {
+        {words.map((word) => {
           return (
             <MyRow
-              key={row.id}
-              id={row.id}
-              eng={row.eng}
-              transcription={row.transcription}
-              rus={row.rus}
-              topic={row.topic}
+              key={word.id}
+              id={word.id}
+              eng={word.english}
+              transcription={word.transcription}
+              rus={word.russian}
+              topic={word.tags}
             />
           );
         })}
