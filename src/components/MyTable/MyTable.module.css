@@ -9,15 +9,15 @@ table {
 table th,
 table td {
   text-align: center;
-  padding: 8px;
+  padding: 5px;
   border: 1px solid #000;
   background-color: #efefef;
   border-radius: 6px;
-  width: 170px;
+  width: 140px;
 }
 
 table td {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 table th {

@@ -5,7 +5,8 @@ import EmptyRow from "./EmptyRow/EmptyRow";
 import { WordContext } from "../Context/Context";
 
 export default function MyTable() {
-  const { words, isLoading, err } = useContext(WordContext);
+  const { words, isLoading, componentChangeApi, componentDeleteFromApi, err } =
+    useContext(WordContext);
   const [data, setData] = useState(words);
 
   const updateRow = (updatedRow) => {
@@ -13,12 +14,26 @@ export default function MyTable() {
       if (row.id === updatedRow.id) {
         return updatedRow;
       }
-      console.log(updatedRow.id);
       return row;
     });
-    console.log(newData);
     setData(newData);
   };
+
+  const newDatas = words.map((word) => {
+    return (
+      <MyRow
+        key={word.id}
+        id={word.id}
+        english={word.english}
+        transcription={word.transcription}
+        russian={word.russian}
+        tags={word.tags}
+        componentChangeApi={componentChangeApi}
+        updateRow={updateRow}
+        componentDeleteFromApi={componentDeleteFromApi}
+      />
+    );
+  });
 
   if (err) {
     return <p className={s.err}>Упс, ошибка: {err.message}</p>;
@@ -47,20 +62,7 @@ export default function MyTable() {
       </thead>
       <tbody>
         <EmptyRow />
-        {words.map((word) => {
-          return (
-            <MyRow
-              key={word.id}
-              id={word.id}
-              eng={word.english}
-              transcription={word.transcription}
-              rus={word.russian}
-              topic={word.tags}
-              // componentChange={componentChange}
-              updateRow={updateRow}
-            />
-          );
-        })}
+        {newDatas}
       </tbody>
     </table>
   );

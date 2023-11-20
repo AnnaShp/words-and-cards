@@ -1,47 +1,43 @@
 import s from "./EmptyRow.module.css";
 import { useState, useRef, useContext } from "react";
-// import Data from "../../Data/Data.json";
 import { WordContext } from "../../Context/Context";
 
 export default function EmptyRow() {
-  const { words, componentAdd, err } = useContext(WordContext);
+  const { words, componentAddToApi, err } = useContext(WordContext);
   const [id, setId] = useState(words.length + 1);
-  const [eng, setEng] = useState("");
+  const [english, setEng] = useState("");
   const [transcription, setTranscription] = useState("");
-  const [rus, setRus] = useState("");
-  const [topic, setTopic] = useState("");
+  const [russian, setRus] = useState("");
+  const [tags, setTags] = useState("");
 
-  let allfields = eng && transcription && rus && topic;
+  let allfields = english && transcription && russian && tags;
 
   const engValue = useRef(null);
   const transcValue = useRef(null);
   const rusValue = useRef(null);
-  const topicValue = useRef(null);
-  let allRefFields = engValue && transcValue && rusValue && topicValue;
+  const tagsValue = useRef(null);
+  let allRefFields = engValue && transcValue && rusValue && tagsValue;
 
   const handleChange = () => {
     setEng(engValue.current.value);
     setTranscription(transcValue.current.value);
     setRus(rusValue.current.value);
-    setTopic(topicValue.current.value);
+    setTags(tagsValue.current.value);
   };
 
   const clearInput = () => {
     setEng("");
     setTranscription("");
     setRus("");
-    setTopic("");
+    setTags("");
   };
 
   const sendData = () => {
-    let row = { id, eng, transcription, rus, topic };
+    let row = { id, english, transcription, russian, tags };
     if (allRefFields.current.value !== "") {
-      // let wordsStr = JSON.stringify(newWord);
       setId(id + 1);
-      componentAdd(row);
-      // window.localStorage.setItem("words", wordsStr);
+      componentAddToApi(row);
     }
-    // Data.push(newWord);
     return row;
     clearInput();
   };
@@ -55,10 +51,10 @@ export default function EmptyRow() {
         <p>{id}</p>
       </td>
       <td>
-        {eng === "" ? (
+        {english === "" ? (
           <input
             type="text"
-            value={eng}
+            value={english}
             onChange={handleChange}
             ref={engValue}
             style={{ border: "1px solid red" }}
@@ -66,7 +62,7 @@ export default function EmptyRow() {
         ) : (
           <input
             type="text"
-            value={eng}
+            value={english}
             onChange={handleChange}
             ref={engValue}
             style={{ border: "1px solid green" }}
@@ -93,10 +89,10 @@ export default function EmptyRow() {
         )}
       </td>
       <td>
-        {rus === "" ? (
+        {russian === "" ? (
           <input
             type="text"
-            value={rus}
+            value={russian}
             onChange={handleChange}
             ref={rusValue}
             style={{ border: "1px solid red" }}
@@ -104,7 +100,7 @@ export default function EmptyRow() {
         ) : (
           <input
             type="text"
-            value={rus}
+            value={russian}
             onChange={handleChange}
             ref={rusValue}
             style={{ border: "1px solid green" }}
@@ -112,20 +108,20 @@ export default function EmptyRow() {
         )}
       </td>
       <td>
-        {topic === "" ? (
+        {tags === "" ? (
           <input
             type="text"
-            value={topic}
+            value={tags}
             onChange={handleChange}
-            ref={topicValue}
+            ref={tagsValue}
             style={{ border: "1px solid red" }}
           />
         ) : (
           <input
             type="text"
-            value={topic}
+            value={tags}
             onChange={handleChange}
-            ref={topicValue}
+            ref={tagsValue}
             style={{ border: "1px solid green" }}
           />
         )}

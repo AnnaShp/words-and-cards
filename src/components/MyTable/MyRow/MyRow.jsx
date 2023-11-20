@@ -1,46 +1,32 @@
 import s from "./MyRow.module.css";
-import ButtonDelete from "../../Buttons/Button_delete";
+import bucket from "../../Images/bucket.png";
 import pen from "../../Images/pen.png";
 import { useState, useRef } from "react";
 
 export default function MyRow({
   updateRow,
-  // componentChange,
+  componentChangeApi,
+  componentDeleteFromApi,
   id,
-  eng,
-  rus,
-  topic,
+  english,
+  russian,
+  tags,
   transcription,
 }) {
   const [isEditable, setEditable] = useState(false);
   const engRef = useRef();
   const rusRef = useRef();
-  const topicRef = useRef();
+  const tagsRef = useRef();
   const transcRef = useRef();
 
   const sendSaveData = () => {
     updateRow({
       id: id,
-      eng: engRef.current.value,
-      rus: rusRef.current.value,
-      topic: topicRef.current.value,
+      english: engRef.current.value,
+      russian: rusRef.current.value,
+      tags: tagsRef.current.value,
       transcription: transcRef.current.value,
     });
-    // console.log(engRef.current.value);
-    // console.log(rusRef.current.value);
-    // console.log(topicRef.current.value);
-    // console.log(transcRef.current.value);
-
-    // не изменяет первоначальные данные в Data
-    // let newWord = {
-    //   eng: engRef.current.value,
-    //   rus: rusRef.current.value,
-    //   topic: topicRef.current.value,
-    //   transcription: transcRef.current.value,
-    // };
-    // let wordsStr = JSON.stringify(newWord);
-    // console.log(wordsStr);
-    // window.localStorage.setItem("words", wordsStr);
     setEditable(false);
   };
 
@@ -49,30 +35,37 @@ export default function MyRow({
       <tr>
         <td>{id}</td>
         <td>
-          <input defaultValue={eng} ref={engRef} />
+          <input defaultValue={english} ref={engRef} />
         </td>
         <td>
           <input defaultValue={transcription} ref={transcRef} />
         </td>
         <td>
-          <input defaultValue={rus} ref={rusRef} />
+          <input defaultValue={russian} ref={rusRef} />
         </td>
         <td>
-          <input defaultValue={topic} ref={topicRef} />
+          <input defaultValue={tags} ref={tagsRef} />
         </td>
         <td className={s.td_change}>
           <button
             className={s.save}
             onClick={() => {
               sendSaveData();
-              // componentChange(id);
+              componentChangeApi(id);
             }}
           >
             Сохранить
           </button>
         </td>
         <td className={s.td_delete}>
-          <ButtonDelete />
+          <button
+            className={s.delete}
+            onClick={() => {
+              componentDeleteFromApi(id);
+            }}
+          >
+            <img src={bucket} className="bucket" alt="bucket" />
+          </button>
         </td>
       </tr>
     );
@@ -80,10 +73,10 @@ export default function MyRow({
   return (
     <tr>
       <td>{id}</td>
-      <td>{eng}</td>
+      <td>{english}</td>
       <td>{transcription}</td>
-      <td>{rus}</td>
-      <td>{topic}</td>
+      <td>{russian}</td>
+      <td>{tags}</td>
       <td className={s.td_change}>
         <button
           className={s.change}
@@ -95,7 +88,9 @@ export default function MyRow({
         </button>
       </td>
       <td className={s.td_delete}>
-        <ButtonDelete />
+        <button className={s.delete} onClick={() => componentDeleteFromApi(id)}>
+          <img src={bucket} className="bucket" alt="bucket" />
+        </button>
       </td>
     </tr>
   );
