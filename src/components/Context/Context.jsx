@@ -8,41 +8,48 @@ function WordContextProvider(props) {
 
   const componentDidMount = async () => {
     const response = await fetch("/api/words");
-    const data = await response.json();
-    setIsLoading(!isLoading);
+    const wordsData = await response.json();
+    setIsLoading(true);
     if (response.status !== 200) {
-      console.log(data.message);
-      setIsLoading(isLoading);
-      // throw Error(data.message);
+      console.log(wordsData.message);
+      setIsLoading(false);
       throw Error(err.message);
     }
-    // console.log(data);
-    // console.log(err);
-    setIsLoading(isLoading);
-    return data;
+    setIsLoading(false);
+    return wordsData;
   };
 
-  const componentChange = async () => {
-    let data;
-    // const config = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(words),
-    // };
+  useEffect(() => {
+    componentDidMount()
+      .then((words) => setWords(words))
+      .catch(
+        (err) => (setErr(err), setIsLoading(false), console.log(err.message))
+      );
+  }, []);
 
+  const componentAdd = async (row) => {
+    // debugger;
+    console.log(row);
+
+    const response = await fetch("/api/words/add", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(row),
+    });
+
+    const newRow = await response.json();
+    console.log(response);
+    console.log(newRow);
+    setIsLoading(!isLoading);
     try {
-      const response = await fetch("api/words/:id/update", {
-        method: "POST",
-      });
-      data = await response.json();
-      setIsLoading(!isLoading);
       if (response.ok) {
-        console.log(data);
-        setWords(words);
+        setWords(newRow);
+        console.log(words);
         setIsLoading(isLoading);
-        return data;
+        return words;
       }
     } catch (err) {
       console.log(err);
@@ -51,20 +58,37 @@ function WordContextProvider(props) {
     }
   };
 
-  useEffect(() => {
-    componentDidMount()
-      .then((words) => setWords((words = words)))
-      .catch((err) => (setErr(err), setIsLoading(isLoading), console.log(err)));
-  }, []);
+  // const componentChange = async (id) => {
+  //   const row = words.find((word) => word.id === id);
+  //   const config = {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(row),
+  //   };
 
-  useEffect(() => {
-    componentChange()
-      // .then((words) => setWords((words = words)))
-      .catch((err) => (setErr(err), setIsLoading(isLoading), console.log(err)));
-  }, []);
+  //   try {
+  //     const response = await fetch(`api/words/:id/update`, config);
+  //     const jsonData = await response.json();
+  //     setIsLoading(!isLoading);
+  //     if (response.ok) {
+  //       setWords(row);
+  //       console.log(jsonData);
+  //       console.log(words);
+  //       console.log(row);
+  //       setIsLoading(isLoading);
+  //       return row;
+  //     }
+  //   } catch (err) {
+  //     console.log(err.message);
+  //     setIsLoading(isLoading);
+  //     return err.message;
+  //   }
+  // };
 
   return (
-    <WordContext.Provider value={{ words, isLoading, componentChange, err }}>
+    <WordContext.Provider value={{ words, componentAdd, isLoading, err }}>
       {props.children}
     </WordContext.Provider>
   );

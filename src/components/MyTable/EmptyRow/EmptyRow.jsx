@@ -1,9 +1,11 @@
 import s from "./EmptyRow.module.css";
-import { useState, useRef } from "react";
-import Data from "../../Data/Data.json";
+import { useState, useRef, useContext } from "react";
+// import Data from "../../Data/Data.json";
+import { WordContext } from "../../Context/Context";
 
 export default function EmptyRow() {
-  const [id, setId] = useState(Data.length + 1);
+  const { words, componentAdd, err } = useContext(WordContext);
+  const [id, setId] = useState(words.length + 1);
   const [eng, setEng] = useState("");
   const [transcription, setTranscription] = useState("");
   const [rus, setRus] = useState("");
@@ -32,17 +34,21 @@ export default function EmptyRow() {
   };
 
   const sendData = () => {
-    let newWord = { id, eng, transcription, rus, topic };
-
+    let row = { id, eng, transcription, rus, topic };
     if (allRefFields.current.value !== "") {
-      let wordsStr = JSON.stringify(newWord);
+      // let wordsStr = JSON.stringify(newWord);
       setId(id + 1);
-      window.localStorage.setItem("words", wordsStr);
+      componentAdd(row);
+      // window.localStorage.setItem("words", wordsStr);
     }
-    Data.push(newWord);
+    // Data.push(newWord);
+    return row;
     clearInput();
   };
 
+  if (err) {
+    return <p className={s.err}>Упс, ошибка: {err.message}</p>;
+  }
   return (
     <tr>
       <td>
@@ -125,7 +131,13 @@ export default function EmptyRow() {
         )}
       </td>
       <td>
-        <button className={s.save} onClick={sendData} disabled={!allfields}>
+        <button
+          className={s.save}
+          onClick={() => {
+            sendData();
+          }}
+          disabled={!allfields}
+        >
           Сохранить
         </button>
       </td>

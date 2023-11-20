@@ -1,20 +1,28 @@
 import s from "./MyTable.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import MyRow from "./MyRow/MyRow";
 import EmptyRow from "./EmptyRow/EmptyRow";
 import { WordContext } from "../Context/Context";
 
 export default function MyTable() {
-  // useEffect(() => {
-  //   data ? setData(data) : <MyRow />;
-  // }, []);
-
   const { words, isLoading, err } = useContext(WordContext);
+  const [data, setData] = useState(words);
+
+  const updateRow = (updatedRow) => {
+    const newData = words.map((row) => {
+      if (row.id === updatedRow.id) {
+        return updatedRow;
+      }
+      console.log(updatedRow.id);
+      return row;
+    });
+    console.log(newData);
+    setData(newData);
+  };
 
   if (err) {
-    return <p className={s.err}>{err.message}</p>;
+    return <p className={s.err}>Упс, ошибка: {err.message}</p>;
   }
-
   if (isLoading) {
     return (
       <div className={s.wrapperLoader}>
@@ -24,7 +32,6 @@ export default function MyTable() {
       </div>
     );
   }
-
   return (
     <table id="table">
       <thead>
@@ -49,6 +56,8 @@ export default function MyTable() {
               transcription={word.transcription}
               rus={word.russian}
               topic={word.tags}
+              // componentChange={componentChange}
+              updateRow={updateRow}
             />
           );
         })}

@@ -2,12 +2,7 @@
   "name": "words-and-cards",
   "version": "0.1.0",
   "private": true,
-  "proxy": {
-    "/api": {
-      "target": "http://itgirlschool.justmakeit.ru",
-      "changeOrigin": true
-    }
-  },
+  "api": "http://itgirlschool.justmakeit.ru",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
