@@ -16,7 +16,6 @@ export default function EmptyRow() {
   const transcValue = useRef(null);
   const rusValue = useRef(null);
   const tagsValue = useRef(null);
-  let allRefFields = engValue && transcValue && rusValue && tagsValue;
 
   const handleChange = () => {
     setEng(engValue.current.value);
@@ -34,12 +33,10 @@ export default function EmptyRow() {
 
   const sendData = () => {
     let row = { id, english, transcription, russian, tags };
-    if (allRefFields.current.value !== "") {
-      setId(id + 1);
-      componentAddToApi(row);
-    }
-    return row;
+    setId(id + 1);
+    componentAddToApi(row);
     clearInput();
+    return row;
   };
 
   if (err) {
@@ -51,80 +48,48 @@ export default function EmptyRow() {
         <p>{id}</p>
       </td>
       <td>
-        {english === "" ? (
-          <input
-            type="text"
-            value={english}
-            onChange={handleChange}
-            ref={engValue}
-            style={{ border: "1px solid red" }}
-          />
-        ) : (
-          <input
-            type="text"
-            value={english}
-            onChange={handleChange}
-            ref={engValue}
-            style={{ border: "1px solid green" }}
-          />
-        )}
+        <input
+          type="text"
+          value={english}
+          onChange={handleChange}
+          ref={engValue}
+          style={{
+            border: english !== "" ? "1px solid green" : "1px solid red",
+          }}
+        />
       </td>
       <td>
-        {transcription === "" ? (
-          <input
-            type="text"
-            value={transcription}
-            onChange={handleChange}
-            ref={transcValue}
-            style={{ border: "1px solid red" }}
-          />
-        ) : (
-          <input
-            type="text"
-            value={transcription}
-            onChange={handleChange}
-            ref={transcValue}
-            style={{ border: "1px solid green" }}
-          />
-        )}
+        <input
+          type="text"
+          value={transcription}
+          onChange={handleChange}
+          ref={transcValue}
+          style={{
+            border: transcription !== "" ? "1px solid green" : "1px solid red",
+          }}
+        />
       </td>
       <td>
-        {russian === "" ? (
-          <input
-            type="text"
-            value={russian}
-            onChange={handleChange}
-            ref={rusValue}
-            style={{ border: "1px solid red" }}
-          />
-        ) : (
-          <input
-            type="text"
-            value={russian}
-            onChange={handleChange}
-            ref={rusValue}
-            style={{ border: "1px solid green" }}
-          />
-        )}
+        <input
+          type="text"
+          value={russian}
+          onChange={handleChange}
+          ref={rusValue}
+          style={{
+            border: russian !== "" ? "1px solid green" : "1px solid red",
+          }}
+        />
       </td>
       <td>
-        {tags === "" ? (
-          <input
-            type="text"
-            value={tags}
-            onChange={handleChange}
-            ref={tagsValue}
-            style={{ border: "1px solid red" }}
-          />
-        ) : (
-          <input
-            type="text"
-            value={tags}
-            onChange={handleChange}
-            ref={tagsValue}
-            style={{ border: "1px solid green" }}
-          />
-        )}
+        <input
+          type="text"
+          value={tags}
+          onChange={handleChange}
+          ref={tagsValue}
+          style={{
+            border: tags !== "" ? "1px solid green" : "1px solid red",
+          }}
+        />
       </td>
       <td>
         <button
@@ -138,7 +103,14 @@ export default function EmptyRow() {
         </button>
       </td>
       <td>
-        <button className={s.cancel}>Отмена</button>
+        <button
+          className={s.cancel}
+          onClick={() => {
+            clearInput();
+          }}
+        >
+          Отмена
+        </button>
       </td>
     </tr>
   );

@@ -19,21 +19,34 @@ export default function MyTable() {
     setData(newData);
   };
 
-  const newDatas = words.map((word) => {
-    return (
-      <MyRow
-        key={word.id}
-        id={word.id}
-        english={word.english}
-        transcription={word.transcription}
-        russian={word.russian}
-        tags={word.tags}
-        componentChangeApi={componentChangeApi}
-        updateRow={updateRow}
-        componentDeleteFromApi={componentDeleteFromApi}
-      />
+  let newDatas;
+  if (Array.isArray(words)) {
+    newDatas = words.map((word) => {
+      return (
+        <MyRow
+          key={word.id}
+          id={word.id}
+          english={word.english}
+          transcription={word.transcription}
+          russian={word.russian}
+          tags={word.tags}
+          componentChangeApi={componentChangeApi}
+          updateRow={updateRow}
+          componentDeleteFromApi={componentDeleteFromApi}
+        />
+      );
+    });
+  } else {
+    newDatas = (
+      <tr>
+        <td colSpan="?">Нет данных</td>
+        <td colSpan="?">Нет данных</td>
+        <td colSpan="?">Нет данных</td>
+        <td colSpan="?">Нет данных</td>
+        <td colSpan="?">Нет данных</td>
+      </tr>
     );
-  });
+  }
 
   if (err) {
     return <p className={s.err}>Упс, ошибка: {err.message}</p>;

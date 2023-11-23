@@ -20,14 +20,16 @@ export default function MyRow({
   const transcRef = useRef();
 
   const sendSaveData = () => {
-    updateRow({
+    let row = {
       id: id,
       english: engRef.current.value,
       russian: rusRef.current.value,
       tags: tagsRef.current.value,
       transcription: transcRef.current.value,
-    });
+    };
+    updateRow(row);
     setEditable(false);
+    componentChangeApi(row);
   };
 
   if (isEditable)
@@ -47,13 +49,7 @@ export default function MyRow({
           <input defaultValue={tags} ref={tagsRef} />
         </td>
         <td className={s.td_change}>
-          <button
-            className={s.save}
-            onClick={() => {
-              sendSaveData();
-              componentChangeApi(id);
-            }}
-          >
+          <button className={s.save} onClick={sendSaveData}>
             Сохранить
           </button>
         </td>
