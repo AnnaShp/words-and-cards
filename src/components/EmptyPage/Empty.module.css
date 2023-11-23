@@ -10,20 +10,20 @@
 }
 
 .p_404 {
-  font-size: 50px;
+  font-size: 3.5em;
   font-weight: bolder;
 }
 
 .p_error {
-  font-size: 20px;
+  font-size: 1.2em;
 }
 
 .error img {
-  width: 40%;
+  width: 45%;
 }
 
 .return {
-  margin-top: 15px;
+  margin-top: 0.5em;
 }
 
 .return a {
@@ -33,5 +33,5 @@
 
 .return a:hover {
   border-bottom: 2px solid #b42121;
-  font-size: 18px;
+  font-size: 1.2em;
 }
