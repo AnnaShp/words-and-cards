@@ -15,6 +15,7 @@
   background: linear-gradient(to left, #bdbebd 0%, #f7f5e5 50%, #cececd 100%);
   z-index: 1;
   justify-content: center;
+  align-items: center;
 }
 
 .word_eng {
