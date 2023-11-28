@@ -1,52 +1,39 @@
 import s from "./MyTable.module.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import MyRow from "./MyRow/MyRow";
 import EmptyRow from "./EmptyRow/EmptyRow";
-import { WordContext } from "../Context/Context";
+// import { observer, inject } from "mobx-react";
 
-export default function MyTable() {
-  const { words, isLoading, componentChangeApi, componentDeleteFromApi, err } =
-    useContext(WordContext);
-  const [data, setData] = useState(words);
+const MyTable = ({ cardStore }) => {
+  const words = [];
+  const [newRow, setNewRow] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState("");
 
-  const updateRow = (updatedRow) => {
-    const newData = words.map((row) => {
-      if (row.id === updatedRow.id) {
-        return updatedRow;
-      }
-      return row;
-    });
-    setData(newData);
+  const addNewRow = () => {
+    // if (!newRow) return;
+    newRow && words.addWord();
+    setNewRow("");
   };
 
-  let newDatas;
-  if (Array.isArray(words)) {
-    newDatas = words.map((word) => {
-      return (
-        <MyRow
-          key={word.id}
-          id={word.id}
-          english={word.english}
-          transcription={word.transcription}
-          russian={word.russian}
-          tags={word.tags}
-          componentChangeApi={componentChangeApi}
-          updateRow={updateRow}
-          componentDeleteFromApi={componentDeleteFromApi}
-        />
-      );
-    });
-  } else {
-    newDatas = (
-      <tr>
-        <td colSpan="?">Нет данных</td>
-        <td colSpan="?">Нет данных</td>
-        <td colSpan="?">Нет данных</td>
-        <td colSpan="?">Нет данных</td>
-        <td colSpan="?">Нет данных</td>
-      </tr>
-    );
-  }
+  const deleteNewRow = (key) => {
+    cardStore.removeWord(key);
+  };
+
+  // const updateNewRow = (newRow) => {
+  //   cardStore.updateWord(newRow);
+  //   setNewRow();
+  // };
+
+  // const updateRow = (updatedRow) => {
+  //   const newData = words.map((row) => {
+  //     if (row.id === updatedRow.id) {
+  //       return updatedRow;
+  //     }
+  //     return row;
+  //   });
+  //   setData(newData);
+  // };
 
   if (err) {
     return <p className={s.err}>Упс, ошибка: {err.message}</p>;
@@ -75,8 +62,22 @@ export default function MyTable() {
       </thead>
       <tbody>
         <EmptyRow />
-        {newDatas}
+        {words.map((word) => {
+          return (
+            <MyRow
+              key={word.id}
+              id={word.id}
+              english={word.english}
+              transcription={word.transcription}
+              russian={word.russian}
+              tags={word.tags}
+              // updateNewRow={updateNewRow}
+            />
+          );
+        })}
       </tbody>
     </table>
   );
-}
+};
+
+export default MyTable;

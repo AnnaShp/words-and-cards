@@ -4,9 +4,8 @@ import pen from "../../Images/pen.png";
 import { useState, useRef } from "react";
 
 export default function MyRow({
-  updateRow,
-  componentChangeApi,
-  componentDeleteFromApi,
+  // updateRow,
+  // updateNewRow,
   id,
   english,
   russian,
@@ -27,9 +26,9 @@ export default function MyRow({
       tags: tagsRef.current.value,
       transcription: transcRef.current.value,
     };
-    updateRow(row);
+    // updateRow(row);
     setEditable(false);
-    componentChangeApi(row);
+    // updateNewRow(row);
   };
 
   if (isEditable)
@@ -57,7 +56,7 @@ export default function MyRow({
           <button
             className={s.delete}
             onClick={() => {
-              componentDeleteFromApi(id);
+              // componentDeleteFromApi(id);
             }}
           >
             <img src={bucket} className="bucket" alt="bucket" />
@@ -84,7 +83,7 @@ export default function MyRow({
         </button>
       </td>
       <td className={s.td_delete}>
-        <button className={s.delete} onClick={() => componentDeleteFromApi(id)}>
+        <button className={s.delete}>
           <img src={bucket} className="bucket" alt="bucket" />
         </button>
       </td>

@@ -2,104 +2,118 @@ import s from "./Carousel.module.css";
 import CardWords from "./CardWords/CardWords";
 import { useState, useEffect, useContext } from "react";
 import useCountLearned from "./useCountLearned";
-import { WordContext } from "../Context/Context";
+import { observer, inject } from "mobx-react";
 
-export default function Carousel() {
-  const { words, isLoading, err } = useContext(WordContext);
-  // функция показа перевода слова
-  const [emptyId, setTranslate] = useState(true);
-  const showTranslate = (id) => {
-    setTranslate(id);
-  };
+const Carousel = inject(["cardStore"])(
+  observer(({ cardStore }) => {
+    const wordsData = cardStore.fetchData();
+    console.log(wordsData);
+    console.log(cardStore.words);
 
-  // счетчик изученных слов
-  const [count, setCount] = useCountLearned(0);
-  const showCountLearned = () => {
-    setCount((count) => count + 1);
-  };
+    const [err, setErr] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    // функция показа перевода слова
+    const [emptyId, setTranslate] = useState(true);
+    const showTranslate = (id) => {
+      setTranslate(id);
+    };
 
-  // переменные для карусели
-  const [offset, setOffset] = useState(0);
-  const page_widht = 300;
-  //листание назад
-  const handlePrevBtn = () => {
-    setOffset((currentOffset) => {
-      const newOffset = currentOffset + page_widht;
-      return Math.min(newOffset, 0);
-    });
-  };
+    // счетчик изученных слов
+    const [count, setCount] = useCountLearned(0);
+    const showCountLearned = () => {
+      setCount((count) => count + 1);
+    };
 
-  // листание вперед
-  const maxOffset = -(page_widht * (words.length - 1));
-  const handleNextBtn = () => {
-    setOffset((currentOffset) => {
-      const newOffset = currentOffset - page_widht;
-      return Math.max(newOffset, maxOffset);
-    });
-  };
+    // переменные для карусели
+    const [offset, setOffset] = useState(0);
+    const page_widht = 300;
+    //листание назад
+    const handlePrevBtn = () => {
+      setOffset((currentOffset) => {
+        const newOffset = currentOffset + page_widht;
+        return Math.min(newOffset, 0);
+      });
+    };
 
-  if (err) {
-    return <p className={s.err}>{err.message}</p>;
-  }
+    // листание вперед
+    const maxOffset = -(page_widht * (cardStore.length - 1));
+    const handleNextBtn = () => {
+      setOffset((currentOffset) => {
+        const newOffset = currentOffset - page_widht;
+        return Math.max(newOffset, maxOffset);
+      });
+    };
 
-  if (isLoading) {
+    let wordsArr;
+    if (Array.isArray(wordsData)) {
+      wordsArr = wordsData.map((word) => (
+        <CardWords
+          key={word.id}
+          id={word.id}
+          eng={word.english}
+          transcription={word.transcription}
+          rus={word.russian}
+          topic={word.tags}
+          emptyId={emptyId}
+          setTranslate={setTranslate}
+          showTranslate={showTranslate}
+          showCountLearned={showCountLearned}
+          useEffect={useEffect}
+        />
+      ));
+    }
+
+    if (err) {
+      return <p className={s.err}>{err.message}</p>;
+    }
+
+    if (isLoading) {
+      return (
+        <div className={s.wrapperLoader}>
+          <div className={s.loader} />
+          <p className={s.loading}>Загрузка ...</p>
+        </div>
+      );
+    }
+
     return (
-      <div className={s.wrapperLoader}>
-        <div className={s.loader} />
-        <p className={s.loading}>Загрузка ...</p>
+      <div className={s.wrapper}>
+        <div className={s.learned}>
+          <span>Изучено слов: {count} </span>
+        </div>
+        <div className={s.carousel} id={s.cards}>
+          <button className={s.btn_prev} onClick={handlePrevBtn}>
+            Назад
+          </button>
+          <div className={s.card_container}>
+            <div
+              className={s.card_visible}
+              style={{ transform: `translateX(${offset}px)` }}
+            >
+              {wordsArr}
+            </div>
+          </div>
+          <button className={s.btn_next} onClick={handleNextBtn}>
+            Дальше
+          </button>
+        </div>
+        <div className={s.errFirst}>
+          {
+            <span style={{ display: offset >= 0 ? "flex" : "none" }}>
+              Это самая первая карточка 🙂
+            </span>
+          }
+        </div>
+        <div className={s.errLast}>
+          {
+            <span style={{ display: offset === maxOffset ? "flex" : "none" }}>
+              Карточки закончились, но можно начать сначала!
+            </span>
+          }
+        </div>
       </div>
     );
-  }
+  })
+);
 
-  return (
-    <div className={s.wrapper}>
-      <div className={s.learned}>
-        <span>Изучено слов: {count} </span>
-      </div>
-      <div className={s.carousel} id={s.cards}>
-        <button className={s.btn_prev} onClick={handlePrevBtn}>
-          Назад
-        </button>
-        <div className={s.card_container}>
-          <div
-            className={s.card_visible}
-            style={{ transform: `translateX(${offset}px)` }}
-          >
-            {words.map((word) => (
-              <CardWords
-                key={word.id}
-                id={word.id}
-                eng={word.english}
-                transcription={word.transcription}
-                rus={word.russian}
-                topic={word.tags}
-                emptyId={emptyId}
-                setTranslate={setTranslate}
-                showTranslate={showTranslate}
-                showCountLearned={showCountLearned}
-                useEffect={useEffect}
-              />
-            ))}
-          </div>
-        </div>
-        <button className={s.btn_next} onClick={handleNextBtn}>
-          Дальше
-        </button>
-      </div>
-      <div className={s.errFirst}>
-        {
-          <span style={{ display: offset >= 0 ? "flex" : "none" }}>
-            Это самая первая карточка 🙂
-          </span>
-        }
-      </div>
-      <div className={s.errLast}>
-        {
-          <span style={{ display: offset === maxOffset ? "flex" : "none" }}>
-            Карточки закончились, но можно начать сначала!
-          </span>
-        }
-      </div>
-    </div>
-  );
-}
+export default Carousel;
