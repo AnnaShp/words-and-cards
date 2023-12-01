@@ -3,14 +3,12 @@ import { useState, useRef } from "react";
 import { observer, inject } from "mobx-react";
 
 const EmptyRow = inject(["cardStore"])(
-  observer(({ cardStore, addNewRow }) => {
+  observer(({ cardStore, err }) => {
     const [id, setId] = useState(cardStore.words.length + 1);
     const [english, setEng] = useState("");
     const [transcription, setTranscription] = useState("");
     const [russian, setRus] = useState("");
     const [tags, setTags] = useState("");
-    const [err, setErr] = useState(false);
-    console.log(cardStore.words);
 
     let allfields = english && transcription && russian && tags;
 
@@ -36,8 +34,8 @@ const EmptyRow = inject(["cardStore"])(
     const sendData = () => {
       let row = { id, english, transcription, russian, tags };
       setId(id + 1);
+      cardStore.addWord(row);
       clearInput();
-      return row;
     };
 
     if (err) {
@@ -98,7 +96,6 @@ const EmptyRow = inject(["cardStore"])(
             className={s.save}
             onClick={() => {
               sendData();
-              addNewRow();
             }}
             disabled={!allfields}
           >

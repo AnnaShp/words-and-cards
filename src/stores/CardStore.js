@@ -1,26 +1,61 @@
 import React from "react";
-import { action, observable, computed } from "mobx";
+import { action, observable } from "mobx";
 import { getDataFromApi, addToApi, changeApi, deleteFromApi } from "./Api/Api";
 
 class CardStores extends React.Component {
   @observable words = [];
+  constructor(props) {
+    super(props);
+    this.fetchData();
+  }
+
+  // данные с сервера
   @action fetchData = async () => {
-    const response = await getDataFromApi();
+    try {
+      const response = await getDataFromApi();
+      this.setWords(response);
+    } catch (err) {
+      console.log("Ошибка при получении данных: ", err);
+    }
+  };
+
+  // изменение массива данных
+  @action setWords = (response) => {
     this.words = response;
-    return this.words;
   };
 
-  @action addWord = (word) => {
-    // this.words.addToApi();
-    return this.words.push(word);
+  // добавление строки
+  @action addWord = async (row) => {
+    try {
+      const response = await addToApi(row);
+      this.setWords(response);
+    } catch (err) {
+      console.log("Не могу добавить строку: ", err);
+    }
   };
 
-  @action removeWord = (key) => {
-    return this.words.splice(key, 1);
+  // изменение строки
+  @action updateWord = async (row) => {
+    try {
+      const response = await changeApi(row);
+      if (response.ok) {
+        this.setWords(response);
+      }
+    } catch (err) {
+      console.log("Не могу обновить строку: ", err);
+    }
   };
 
-  @action updateWord = (row) => {
-    this.words.find((item) => row.id === item.id);
+  // удаление строки
+  @action removeWord = async (row) => {
+    try {
+      const response = await deleteFromApi(row);
+      if (response.ok) {
+        this.setWords(response);
+      }
+    } catch (err) {
+      console.log("Не могу удалить строку: ", err);
+    }
   };
 }
 

@@ -44,18 +44,22 @@ const changeApi = async (row) => {
   return data;
 };
 
-// удаление данных с сервера
-const deleteFromApi = async (id) => {
+const deleteFromApi = async (row) => {
+  const rowData = {
+    ...row,
+    tags_json: '[" u0430u044du0440u043eu043fu043eu0440u0442"]',
+  };
+  const id = row.id;
+
   const response = await fetch(`/api/words/${id}/delete`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify(rowData),
   });
 
-  const rowData = await response.json();
-  const data = rowData.filter((item) => item.id !== id);
+  const data = await response.json();
   return data;
 };
 

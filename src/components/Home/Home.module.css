@@ -10,3 +10,23 @@ h1 {
   color: white;
   font-weight: 400;
 }
+
+.tablePart {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+  font-size: 2.5em;
+  margin-top: 5em;
+}
+
+.tablePart a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tablePart a:hover {
+  color: white;
+}

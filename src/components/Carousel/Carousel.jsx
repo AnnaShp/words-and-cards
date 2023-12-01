@@ -5,13 +5,10 @@ import useCountLearned from "./useCountLearned";
 import { observer, inject } from "mobx-react";
 
 const Carousel = inject(["cardStore"])(
-  observer(({ cardStore }) => {
-    const wordsData = cardStore.fetchData();
-    console.log(wordsData);
-    console.log(cardStore.words);
+  observer(({ cardStore, err, isLoading }) => {
+    const words = cardStore.words;
+    // console.log(cardStore.words);
 
-    const [err, setErr] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     // функция показа перевода слова
     const [emptyId, setTranslate] = useState(true);
     const showTranslate = (id) => {
@@ -36,7 +33,7 @@ const Carousel = inject(["cardStore"])(
     };
 
     // листание вперед
-    const maxOffset = -(page_widht * (cardStore.length - 1));
+    const maxOffset = -(page_widht * (words.length - 1));
     const handleNextBtn = () => {
       setOffset((currentOffset) => {
         const newOffset = currentOffset - page_widht;
@@ -45,8 +42,8 @@ const Carousel = inject(["cardStore"])(
     };
 
     let wordsArr;
-    if (Array.isArray(wordsData)) {
-      wordsArr = wordsData.map((word) => (
+    if (Array.isArray(words)) {
+      wordsArr = words.map((word) => (
         <CardWords
           key={word.id}
           id={word.id}
