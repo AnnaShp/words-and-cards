@@ -1,7 +1,7 @@
 import s from "./MyRow.module.css";
 import bucket from "../../Images/bucket.png";
 import pen from "../../Images/pen.png";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { observer, inject } from "mobx-react";
 
 const MyRow = inject(["cardStore"])(
@@ -13,7 +13,11 @@ const MyRow = inject(["cardStore"])(
       const tagsRef = useRef();
       const transcRef = useRef();
 
-      const sendSavedData = () => {
+      useEffect(() => {
+        cardStore.fetchData();
+      });
+
+      const sendSavedData = async () => {
         let row = {
           id: id,
           english: engRef.current.value,
@@ -21,14 +25,17 @@ const MyRow = inject(["cardStore"])(
           russian: rusRef.current.value,
           tags: tagsRef.current.value,
         };
+
+        await cardStore.updateWord(row);
         changeRow(row);
-        cardStore.updateWord(row);
         setEditable(false);
       };
 
-      const deleteRow = () => {
+      const deleteRow = async () => {
         let row = { id, english, russian, tags, transcription };
-        cardStore.removeWord(row);
+
+        await cardStore.removeWord(row);
+        changeRow(row);
       };
 
       if (isEditable)
