@@ -1,7 +1,17 @@
-.center {
+.center,
+.error,
+.return {
   display: flex;
   flex-direction: column;
+}
+
+.center {
   margin: 30px;
+}
+
+.error,
+.return {
+  align-items: center;
 }
 
 .error p {
@@ -19,7 +29,7 @@
 }
 
 .error img {
-  width: 45%;
+  width: 42%;
 }
 
 .return {
