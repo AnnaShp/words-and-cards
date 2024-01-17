@@ -1,20 +1,27 @@
 import s from "./MyTable.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MyRow from "./MyRow/MyRow";
 import EmptyRow from "./EmptyRow/EmptyRow";
 import { observer, inject } from "mobx-react";
 
 const MyTable = inject(["cardStore"])(
   observer(({ cardStore, err, isLoading }) => {
+    const [loading, setLoading] = useState(true);
     const wordsData = cardStore.words;
 
-    const changeRow = (updatedRow) => {
-      wordsData.map((row) => {
-        if (row.id === updatedRow.id) {
-          return updatedRow;
-        }
-        return row;
+    useEffect(() => {
+      cardStore.fetchData(() => {
+        setLoading(false);
       });
+    });
+
+    const changeRow = async (updatedRow) => {
+      setLoading(true);
+
+      await cardStore.fetchData(updatedRow);
+      wordsData.map((row) => (row.id === updatedRow.id ? updatedRow : row));
+      // cardStore.updatedWord(updatedWordsData);
+      setLoading(false);
     };
 
     let newDatas;
@@ -69,7 +76,7 @@ const MyTable = inject(["cardStore"])(
           </tr>
         </thead>
         <tbody>
-          <EmptyRow />
+          <EmptyRow changeRow={changeRow} />
           {newDatas}
         </tbody>
       </table>
