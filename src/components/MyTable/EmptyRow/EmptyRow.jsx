@@ -1,14 +1,24 @@
 import s from "./EmptyRow.module.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { observer, inject } from "mobx-react";
 
 const EmptyRow = inject(["cardStore"])(
-  observer(({ cardStore, err }) => {
+  observer(({ cardStore, err, changeRow }) => {
+    const [loading, setLoading] = useState(true);
     const [id, setId] = useState(cardStore.words.length + 1);
     const [english, setEng] = useState("");
     const [transcription, setTranscription] = useState("");
     const [russian, setRus] = useState("");
     const [tags, setTags] = useState("");
+
+    useEffect(() => {
+      cardStore.fetchData(() => {
+        setLoading(false);
+      });
+      // cardStore.addWord(() => {
+      //   setLoading(false);
+      // });
+    });
 
     let allfields = english && transcription && russian && tags;
 
@@ -31,11 +41,15 @@ const EmptyRow = inject(["cardStore"])(
       setTags("");
     };
 
-    const sendData = () => {
-      let row = { id, english, transcription, russian, tags };
+    const sendData = async (newRow) => {
+      setLoading(true);
       setId(id + 1);
-      cardStore.addWord(row);
+      newRow = { id, english, transcription, russian, tags };
+
+      await cardStore.addWord(newRow);
+      changeRow(newRow);
       clearInput();
+      setLoading(false);
     };
 
     if (err) {
