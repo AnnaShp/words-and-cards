@@ -10,9 +10,10 @@ class CardStores extends React.Component {
   }
 
   // данные с сервера
-  @action fetchData = async () => {
+  @action fetchData = async (onLoaded) => {
     try {
       const response = await getDataFromApi();
+      if (onLoaded) onLoaded();
       this.setWords(response);
     } catch (err) {
       console.log("Ошибка при получении данных: ", err);
@@ -28,7 +29,10 @@ class CardStores extends React.Component {
   @action addWord = async (row) => {
     try {
       const response = await addToApi(row);
-      this.setWords(response);
+      if (response.ok) {
+        console.log(response);
+        this.setWords(response);
+      }
     } catch (err) {
       console.log("Не могу добавить строку: ", err);
     }
@@ -39,6 +43,7 @@ class CardStores extends React.Component {
     try {
       const response = await changeApi(row);
       if (response.ok) {
+        console.log(response);
         this.setWords(response);
       }
     } catch (err) {
